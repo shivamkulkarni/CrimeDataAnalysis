@@ -1,0 +1,29 @@
+create table if not exists mydb.crimedata
+(no int,
+id int,
+case_number varchar(10000),
+dates timestamp,
+block varchar(10000),
+IUCR varchar(10000),
+primary_type varchar(10000),
+description varchar(10000),
+location_description varchar(10000),
+arrest varchar(10000),
+domestic varchar(10000),
+beat int,
+district int,
+ward int,
+community_area int,
+fbi_code varchar(10000),
+x_coordinate int,
+y_coordinate int,
+year int,
+updated_on timestamp,
+latitude int,
+longitude int,
+location int)
+row format delimited fields terminated by ',' stored as textfile location
+'/home/maria_dev/crime_data.csv';
+
+
+load data local inpath '/user/maria_dev/crime_data.csv' into table mydb.crimedata

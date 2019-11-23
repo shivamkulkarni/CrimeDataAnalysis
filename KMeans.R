@@ -31,6 +31,10 @@ map <- createDataFrame(map.df)
 # Fit a k-means model with spark.kmeans
 kmeansModel <- spark.kmeans(map, ~ xcor + ycor,
                             k = 30)
+
+#Visualize clustering results 
+fviz_cluster(kmeansModel, data=map.df[1:2])
+
 # Model summary
 summary(kmeansModel)
 

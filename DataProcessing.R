@@ -1,0 +1,61 @@
+new.chicago.df <- read.csv("clean_data.csv", header = T, stringsAsFactors = F)
+time1 <- strsplit(new.chicago.df$Date, " ")
+times <- c()
+for(n in 1:nrow(new.chicago.df))
+{
+  times <- c(times, as.character(time1[[n]][2]))
+}
+
+split <- strsplit(times, ":")
+hour <- c()
+for(n in 1:nrow(new.chicago.df))
+{
+  hour <- c(hour,as.numeric(split[[n]][1]))
+}
+
+time2 <- c()
+for(n in 1:nrow(new.chicago.df))
+{
+  time2 <- c(time2, as.character(time1[[n]][3]))
+}
+
+condition <- time2 == "PM"
+hour[condition] <- hour[condition] + 12
+
+hour.of.the.day <- hour
+
+new.chicago.df <- cbind(new.chicago.df,hour.of.the.day)
+
+dates <- c()
+for(n in 1:nrow(new.chicago.df))
+{
+  dates <- c(dates, as.character(time1[[n]][1]))
+}
+
+split.d <- strsplit(dates, "/")
+month <- c()
+for(n in 1:nrow(new.chicago.df))
+{
+  month <- c(month,as.numeric(split.d[[n]][1]))
+}
+
+season <- c(rep("Winter", nrow(new.chicago.df)))
+
+for(n in 1:nrow(new.chicago.df))
+{
+  if(month[n] >= 3 && month[n] < 6)
+  {
+    season[n] = "Spring"
+  }
+  else if (month[n] >= 6 && month[n] < 9)
+  {
+    season[n] = "Summer"
+  }
+  else if (month[n] >= 9 && month[n] < 12)
+  {
+    season[n] = "Fall"
+  }
+}
+
+new.chicago.df <- cbind(new.chicago.df,season)
+write.csv(new.chicago.df,"C:/R_programming/new_clean_data_final.csv")

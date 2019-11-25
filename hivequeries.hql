@@ -26,17 +26,19 @@ longitude DOUBLE,
 hour_of_the_day INT,
 location STRING)
 ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' STORED AS textfile LOCATION
-'/user/maria_dev/data.csv'
+'/user/maria_dev/cleaned_data.csv'
 TBLPROPERTIES("skip.header.line.count"="1");
 
 LOAD DATA LOCAL INPATH './cleaned_data.csv' OVERWRITE INTO TABLE MyDb.CrimeData;
 
-SELECT  primary_type, COUNT(id) as cnt from MyDb.CrimeData GROUP BY primary_type ORDER BY cnt DESC LIMIT 3;
+INSERT OVERWRITE DIRECTORY '/user/maria_dev/HiveResults/que1' SELECT  primary_type, COUNT(id) as cnt from MyDb.CrimeData GROUP BY primary_type ORDER BY cnt DESC LIMIT 10;
+SELECT  primary_type, COUNT(id) as cnt from MyDb.CrimeData GROUP BY primary_type ORDER BY cnt DESC LIMIT 10;
 
+INSERT OVERWRITE DIRECTORY '/user/maria_dev/HiveResults/que2' SELECT location_description, COUNT(id) as cnt from MyDb.CrimeData GROUP BY location_description ORDER BY cnt DESC LIMIT 10;
 SELECT location_description, COUNT(id) as cnt from MyDb.CrimeData GROUP BY location_description ORDER BY cnt DESC LIMIT 10;
 
-SELECT hour_of_the_day, primary_type, COUNT(id) as cnt from MyDb.CrimeData GROUP BY hour_of_the_day, 
-primary_type ORDER BY hour_of_the_day;
+INSERT OVERWRITE DIRECTORY '/user/maria_dev/HiveResults/que3' SELECT hour_of_the_day, primary_type, COUNT(id) as cnt from MyDb.CrimeData GROUP BY hour_of_the_day, primary_type ORDER BY hour_of_the_day;
+SELECT hour_of_the_day, primary_type, COUNT(id) as cnt from MyDb.CrimeData GROUP BY hour_of_the_day, primary_type ORDER BY hour_of_the_day;
 
-SELECT hour_of_the_day, location_description, COUNT(id) as cnt from MyDb.CrimeData WHERE hour_of_the_day > 0 AND 
-hour_of_the_day < 25 GROUP BY hour_of_the_day, location_description ORDER BY cnt DESC LIMIT 15;
+INSERT OVERWRITE DIRECTORY '/user/maria_dev/HiveResults/que4' SELECT hour_of_the_day, location_description, COUNT(id) as cnt from MyDb.CrimeData WHERE hour_of_the_day > 0 AND hour_of_the_day < 25 GROUP BY hour_of_the_day, location_description ORDER BY cnt DESC LIMIT 15;
+SELECT hour_of_the_day, location_description, COUNT(id) as cnt from MyDb.CrimeData WHERE hour_of_the_day > 0 AND hour_of_the_day < 25 GROUP BY hour_of_the_day, location_description ORDER BY cnt DESC LIMIT 15;

@@ -35,6 +35,8 @@ SELECT  primary_type, COUNT(id) as cnt from MyDb.CrimeData GROUP BY primary_type
 
 SELECT location_description, COUNT(id) as cnt from MyDb.CrimeData GROUP BY location_description ORDER BY cnt DESC LIMIT 10;
 
-SELECT hour_of_the_day, primary_type, COUNT(id) as cnt from MyDb.CrimeData GROUP BY hour_of_the_day, primary_type ORDER BY hour_of_the_day;
+SELECT hour_of_the_day, primary_type, COUNT(id) as cnt from MyDb.CrimeData GROUP BY hour_of_the_day, 
+primary_type ORDER BY hour_of_the_day;
 
-SELECT hour_of_the_day, location_description, COUNT(id) as cnt from MyDb.CrimeData WHERE hour_of_the_day > 0 AND hour_of_the_day < 25 GROUP BY hour_of_the_day, location_description ORDER BY cnt DESC LIMIT 15;
+SELECT hour_of_the_day, location_description, COUNT(id) as cnt from MyDb.CrimeData WHERE hour_of_the_day > 0 AND 
+hour_of_the_day < 25 GROUP BY hour_of_the_day, location_description ORDER BY cnt DESC LIMIT 15;
